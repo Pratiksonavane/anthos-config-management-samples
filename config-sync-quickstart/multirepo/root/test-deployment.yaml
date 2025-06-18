@@ -4,13 +4,6 @@ metadata:
   name: my-app-deployment1
   labels:
     app: my-app1
-  annotations:
-    # This annotation tells GKE's client-side configuration tools
-    # (like Config Sync or Configuration Controller) to ignore mutations
-    # to this resource. This means if a mutating webhook modifies this
-    # Deployment (e.g., adds a sidecar), Config Sync won't try to revert
-    # that change.
-    client.lifecycle.config.k8s.io/mutation: ignore
 spec:
   replicas: 3
   selector:
