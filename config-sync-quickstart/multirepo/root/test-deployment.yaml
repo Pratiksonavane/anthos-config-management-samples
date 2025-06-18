@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app-deployment
+  name: my-app-deployment1
   labels:
-    app: my-app
+    app: my-app1
   annotations:
     # This annotation tells GKE's client-side configuration tools
     # (like Config Sync or Configuration Controller) to ignore mutations
@@ -15,11 +15,11 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: my-app
+      app: my-app1
   template:
     metadata:
       labels:
-        app: my-app
+        app: my-app1
       # You might also put the annotation here if the webhook primarily affects Pods,
       # but if you're ignoring mutations to the Deployment object itself,
       # it typically goes on the Deployment metadata.
