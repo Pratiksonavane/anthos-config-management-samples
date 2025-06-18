@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  labels:
+    app: my-app
+  annotations:
+    # This annotation tells GKE's client-side configuration tools
+    # (like Config Sync or Configuration Controller) to ignore mutations
+    # to this resource. This means if a mutating webhook modifies this
+    # Deployment (e.g., adds a sidecar), Config Sync won't try to revert
+    # that change.
+    client.lifecycle.config.k8s.io/mutation: ignore
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+      # You might also put the annotation here if the webhook primarily affects Pods,
+      # but if you're ignoring mutations to the Deployment object itself,
+      # it typically goes on the Deployment metadata.
+      # annotations:
+      #   client.lifecycle.config.k8s.io/mutation: ignore
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.23.3 # Using a specific tag to avoid 'latest' issues
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
